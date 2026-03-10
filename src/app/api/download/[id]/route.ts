@@ -31,14 +31,23 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     const metaRes = await fetch(metaBlobs[0].url);
     const metadata = await metaRes.json();
 
-    // Stream the file directly to client from the blob URL
-    const fileRes = await fetch(metadata.fileUrl);
+    // Stream the file directly to client from the Shelby RPC
+    // Format: https://api.testnet.shelby.xyz/v1/blobs/{account_address}/{blob_name}
+    const shelbyUrl = `https://api.testnet.shelby.xyz/v1/blobs/${metadata.creatorAddress}/${metadata.shelbyBlobName}`;
+    const fileRes = await fetch(shelbyUrl);
+
+    if (!fileRes.ok) {
+      if (fileRes.status === 404) {
+        return new NextResponse("File is still propagating on the Shelby network. Please try again in a few minutes.", { status: 404 });
+      }
+      return new NextResponse("Error fetching file from Shelby network", { status: 500 });
+    }
 
     return new NextResponse(fileRes.body, {
       status: 200,
       headers: {
-        "Content-Type": metadata.fileType,
-        "Content-Disposition": `attachment; filename="${metadata.fileName}"`,
+        "Content-Type": metadata.fileType || "application/octet-stream",
+        "Content-Disposition": `attachment; filename="${metadata.shelbyBlobName}"`,
       },
     });
 

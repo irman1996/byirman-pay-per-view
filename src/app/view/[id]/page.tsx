@@ -118,9 +118,8 @@ export default function ViewPage() {
         
         <h2 className="content-title">{metadata.title}</h2>
         <div className="metadata-pills">
-          <span className="pill">{metadata.fileName}</span>
-          <span className="pill">{metadata.fileType || "Unknown type"}</span>
-          <span className="pill">{(metadata.fileSize / 1024 / 1024).toFixed(2)} MB</span>
+          <span className="pill">{metadata.shelbyBlobName}</span>
+          <span className="pill">Web3 Storage (Shelby)</span>
         </div>
 
         <div className="divider"></div>
@@ -129,8 +128,8 @@ export default function ViewPage() {
           <div className="unlocked-state">
             <h3 className="success-text">🎉 Unlocked Successfully!</h3>
             <p>You can now download your content.</p>
-            <a href={unlockedContentUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-large w-full" download={metadata.fileName}>
-              Download {metadata.fileName}
+            <a href={unlockedContentUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-large w-full" download={metadata.shelbyBlobName}>
+              Download {metadata.shelbyBlobName}
             </a>
           </div>
         ) : (

@@ -1,13 +1,22 @@
 "use client";
 
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useWallet, InputTransactionData } from "@aptos-labs/wallet-adapter-react";
+import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { 
+  type BlobCommitments, 
+  createDefaultErasureCodingProvider, 
+  generateCommitments,
+  expectedTotalChunksets,
+  ShelbyBlobClient,
+  ShelbyClient
+} from "@shelby-protocol/sdk/browser";
 import { useState, useRef } from "react";
 import Link from "next/link";
 import "./create.css";
 
 export default function CreatePage() {
-  const { connected, account } = useWallet();
+  const { connected, account, signAndSubmitTransaction } = useWallet();
   const [file, setFile] = useState<File | null>(null);
   const [price, setPrice] = useState("1");
   const [title, setTitle] = useState("");
@@ -21,26 +30,68 @@ export default function CreatePage() {
     setLoading(true);
 
     try {
-      // Create a FormData to upload
+      // Initialize Aptos and Shelby clients
+      const aptosClient = new Aptos(new AptosConfig({ network: Network.TESTNET }));
+      
+      // Need an API key in a real app, assuming empty for testnet per docs if not provided
+      const shelbyClient = new ShelbyClient({
+        network: Network.TESTNET,
+      });
+
+      // 1. Encode File for Shelby
+      setLoading(true);
+      const data = Buffer.from(await file.arrayBuffer());
+      const provider = await createDefaultErasureCodingProvider();
+      const commitments: BlobCommitments = await generateCommitments(provider, data);
+
+      // 2. Register On-Chain
+      const payload = ShelbyBlobClient.createRegisterBlobPayload({
+        account: account.address,
+        blobName: file.name,
+        blobMerkleRoot: commitments.blob_merkle_root,
+        numChunksets: expectedTotalChunksets(commitments.raw_data_size),
+        expirationMicros: (1000 * 60 * 60 * 24 * 30 + Date.now()) * 1000, // 30 days
+        blobSize: commitments.raw_data_size,
+        encoding: 1, // Required by the SDK
+      });
+
+      const transaction: InputTransactionData = { data: payload };
+      const transactionSubmitted = await signAndSubmitTransaction(transaction);
+      
+      await aptosClient.waitForTransaction({
+        transactionHash: transactionSubmitted.hash,
+      });
+
+      // 3. Upload File Data to Shelby RPC
+      await shelbyClient.rpc.putBlob({
+        account: account.address,
+        blobName: file.name,
+        blobData: new Uint8Array(await file.arrayBuffer()),
+      });
+
+      // 4. Save Metadata to Vercel (so our DB knows the price and title)
+      // The contentId is now the Shelby object path for this account + filename
+      // For URL safety, we hash it to create a short ID for the link
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", new Blob(["mock"], { type: "text/plain" }), `mock-${file.name}`); // We don't upload the real file to Vercel anymore!
       formData.append("title", title);
       formData.append("price", price);
       formData.append("creatorAddress", account.address.toString());
+      formData.append("shelbyBlobName", file.name); // Track the exact filename uploaded to Shelby
 
       const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Upload failed");
-      const data = await res.json();
+      if (!res.ok) throw new Error("Metadata Upload failed");
+      const metadataRes = await res.json();
       
-      const shareableLink = `${window.location.origin}/view/${data.contentId}`;
+      const shareableLink = `${window.location.origin}/view/${metadataRes.contentId}`;
       setGeneratedLink(shareableLink);
     } catch (error) {
       console.error(error);
-      alert("Error uploading file.");
+      alert("Error: " + (error as Error).message);
     } finally {
       setLoading(false);
     }
