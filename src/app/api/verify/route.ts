@@ -3,6 +3,8 @@ import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 import { put, list } from "@vercel/blob";
 import crypto from "crypto";
 
+export const runtime = 'nodejs'; // Ensure this runs in Node, not Edge
+
 const aptos = new Aptos(new AptosConfig({ network: Network.TESTNET }));
 
 export async function POST(req: Request) {

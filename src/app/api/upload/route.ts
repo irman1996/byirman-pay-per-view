@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import crypto from "crypto";
 
+export const runtime = 'nodejs'; // Ensure this runs in Node, not Edge
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
