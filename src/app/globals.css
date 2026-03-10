@@ -1,0 +1,159 @@
+@import "@aptos-labs/wallet-adapter-ant-design/dist/index.css";
+
+:root {
+  --background: #fffafa; /* Snow white / very light pink */
+  --foreground: #5c4033; /* Deep brown */
+  
+  /* Primary brand colors */
+  --primary: #ff69b4; /* Hot pink */
+  --primary-hover: #ff1493; /* Deep pink */
+  --secondary: #d2b48c; /* Tan / Light brown */
+  
+  /* Surface colors for cards and containers */
+  --surface: rgba(255, 255, 255, 0.85);
+  --surface-border: rgba(92, 64, 51, 0.15); /* Brown border */
+  --surface-glow: rgba(255, 105, 180, 0.2);
+  
+  /* Feedback colors */
+  --success: #06d6a0;
+  --error: #ef476f;
+  
+  /* Layout */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px 0 rgba(92, 64, 51, 0.05); /* Soft brown shadow */
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Base button styling */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff;
+  box-shadow: 0 4px 15px var(--surface-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--surface-border);
+}
+
+.btn-secondary:hover {
+  background: rgba(92, 64, 51, 0.05);
+  border-color: rgba(92, 64, 51, 0.2);
+}
+
+/* Overriding Aptos Wallet Button for matching style */
+.wallet-button {
+  border-radius: var(--radius-sm) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--surface-border) !important;
+  color: var(--foreground) !important;
+  transition: all var(--transition) !important;
+}
+
+.wallet-button:hover {
+  background: rgba(92, 64, 51, 0.05) !important;
+  border-color: var(--primary) !important;
+}
+
+/* Background animated gradient or blobs */
+.bg-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.bg-blob {
+  position: absolute;
+  filter: blur(100px);
+  opacity: 0.5;
+  border-radius: 50%;
+  animation: float 20s infinite ease-in-out alternate;
+}
+
+.bg-blob-1 {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: rgba(255, 105, 180, 0.15); /* Pink blob */
+}
+
+.bg-blob-2 {
+  bottom: -10%;
+  right: -10%;
+  width: 40vw;
+  height: 40vw;
+  background: rgba(210, 180, 140, 0.15); /* Tan/brown blob */
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(5%, 10%) scale(1.1); }
+}

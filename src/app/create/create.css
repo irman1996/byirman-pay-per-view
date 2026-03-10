@@ -1,0 +1,146 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--foreground), var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-wrap: balance;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #a1a1aa;
+  margin-bottom: 3rem;
+  text-wrap: balance;
+  line-height: 1.6;
+}
+
+.connect-prompt, .upload-form, .success-panel {
+  width: 100%;
+  max-width: 500px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.connect-prompt h3 {
+  text-align: center;
+  font-weight: 500;
+  margin: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #e4e4e7;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  border: 1px solid var(--surface-border);
+  color: var(--foreground);
+  font-size: 1rem;
+  transition: all var(--transition);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #ffffff;
+}
+
+.file-drop-zone {
+  width: 100%;
+  padding: 2rem;
+  border: 2px dashed var(--surface-border);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: #ffffff;
+  color: #a1a1aa;
+}
+
+.file-drop-zone:hover {
+  border-color: var(--primary);
+  background: rgba(157, 78, 221, 0.05);
+  color: #fff;
+}
+
+.file-drop-zone.has-file {
+  border-style: solid;
+  border-color: var(--success);
+  background: rgba(6, 214, 160, 0.05);
+  color: var(--success);
+}
+
+.file-name {
+  font-weight: 600;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.mt-2 {
+  margin-top: 1rem;
+}
+
+.success-panel h3 {
+  color: var(--success);
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.link-box {
+  display: flex;
+  gap: 0.5rem;
+}
