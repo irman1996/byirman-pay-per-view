@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { put } from "@vercel/blob";
 import crypto from "crypto";
 
 export async function POST(req: Request) {
@@ -15,16 +14,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
     const contentId = crypto.randomBytes(8).toString("hex");
     
-    // Save file and metadata
-    const uploadDir = path.join(process.cwd(), "uploads");
-    await mkdir(uploadDir, { recursive: true });
-    
-    const filePath = path.join(uploadDir, `${contentId}-${file.name}`);
-    await writeFile(filePath, buffer);
+    // 1. Upload original file to Vercel Blob
+    const fileBlob = await put(`uploads/${contentId}-${file.name}`, file, {
+      access: "public",
+    });
 
+    // 2. Upload metadata to Vercel Blob (as a JSON file)
     const metadata = {
       contentId,
       title,
@@ -33,15 +30,18 @@ export async function POST(req: Request) {
       fileName: file.name,
       fileType: file.type,
       fileSize: file.size,
-      filePath, 
+      fileUrl: fileBlob.url, // Store the blob URL instead of local path
     };
 
-    const metadataPath = path.join(uploadDir, `${contentId}.json`);
-    await writeFile(metadataPath, JSON.stringify(metadata, null, 2));
+    const metadataBuffer = Buffer.from(JSON.stringify(metadata, null, 2));
+    await put(`uploads/${contentId}.json`, metadataBuffer, {
+      access: "public",
+      contentType: "application/json",
+    });
 
     return NextResponse.json({ success: true, contentId }, { status: 200 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Upload error:", error);
-    return NextResponse.json({ error: "Failed to upload file" }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Failed to upload file" }, { status: 500 });
   }
 }

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { readFile } from "fs/promises";
-import path from "path";
+import { list } from "@vercel/blob";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -12,26 +11,30 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const uploadDir = path.join(process.cwd(), "uploads");
-    
-    // Verify token
-    const tokensPath = path.join(uploadDir, `${id}.tokens.json`);
-    const tokensRaw = await readFile(tokensPath, "utf-8");
-    const tokens = JSON.parse(tokensRaw);
+    // Verify token from Vercel Blob
+    const { blobs: tokenBlobs } = await list({ prefix: `uploads/${id}.tokens.json`, limit: 1 });
+    if (!tokenBlobs || tokenBlobs.length === 0) {
+      return new NextResponse("Invalid or expired token", { status: 403 });
+    }
+    const tR = await fetch(tokenBlobs[0].url);
+    const tokens = await tR.json();
 
     if (!tokens.includes(token)) {
       return new NextResponse("Invalid or expired token", { status: 403 });
     }
 
-    // Fetch metadata to find file
-    const metadataPath = path.join(uploadDir, `${id}.json`);
-    const metadataRaw = await readFile(metadataPath, "utf-8");
-    const metadata = JSON.parse(metadataRaw);
+    // Fetch metadata to find file url
+    const { blobs: metaBlobs } = await list({ prefix: `uploads/${id}.json`, limit: 1 });
+    if (!metaBlobs || metaBlobs.length === 0) {
+      return new NextResponse("Content not found", { status: 404 });
+    }
+    const metaRes = await fetch(metaBlobs[0].url);
+    const metadata = await metaRes.json();
 
-    // Read and stream file
-    const fileBuffer = await readFile(metadata.filePath);
+    // Stream the file directly to client from the blob URL
+    const fileRes = await fetch(metadata.fileUrl);
 
-    return new NextResponse(fileBuffer, {
+    return new NextResponse(fileRes.body, {
       status: 200,
       headers: {
         "Content-Type": metadata.fileType,
