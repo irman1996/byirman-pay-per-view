@@ -53,16 +53,19 @@ export default function CreatePage() {
         fullnode: fullnodeUrl
       }));
       
-      let shelbyNetwork: any = activeNetwork;
+      let indexerUrl: string | undefined;
+
       if (activeNetwork === Network.CUSTOM && fullnodeUrl?.includes("shelby")) {
-         shelbyNetwork = "shelbynet"; // Native enumeration in @shelby-protocol/sdk
-      } else if (activeNetwork === Network.DEVNET) {
-         shelbyNetwork = Network.TESTNET; // Fallback for standard Devnet
+         // This is Shelby's Devnet (SHELBYNET)
+         indexerUrl = "https://api.shelbynet.aptoslabs.com/nocode/v1/public/cmforrguw0042s601fn71f9l2/v1/graphql";
+      } else if (activeNetwork === Network.TESTNET || activeNetwork === Network.DEVNET) {
+         indexerUrl = "https://api.testnet.aptoslabs.com/nocode/v1/public/cmlfqs5wt00qrs601zt5s4kfj/v1/graphql";
       }
 
       const shelbyClient = new ShelbyClient({
-        network: shelbyNetwork,
-        rpc: fullnodeUrl ? { baseUrl: fullnodeUrl } : undefined
+        network: activeNetwork === Network.DEVNET ? Network.TESTNET : activeNetwork,
+        rpc: fullnodeUrl ? { baseUrl: fullnodeUrl } : undefined,
+        indexer: indexerUrl ? { baseUrl: indexerUrl } : undefined
       });
 
       // 1. Encode File for Shelby
