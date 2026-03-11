@@ -2,8 +2,13 @@
 
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import { useWallet, InputTransactionData } from "@aptos-labs/wallet-adapter-react";
-import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { Aptos, AptosConfig, Network, AccountAddress } from "@aptos-labs/ts-sdk";
 import { 
+  type BlobCommitments, 
+  createDefaultErasureCodingProvider, 
+  generateCommitments,
+  expectedTotalChunksets,
+  ShelbyBlobClient,
   ShelbyClient
 } from "@shelby-protocol/sdk/browser";
 import { useState, useRef } from "react";
@@ -25,25 +30,45 @@ export default function CreatePage() {
     setLoading(true);
 
     try {
-      // Initialize Shelby client for browser
+      // Initialize Aptos and Shelby clients
+      const aptosClient = new Aptos(new AptosConfig({ network: Network.TESTNET }));
+      
       const shelbyClient = new ShelbyClient({
         network: Network.TESTNET,
       });
 
-      // 1. Upload File directly via Shelby SDK (Handles encoding + registration + RPC upload)
-      // The ShelbyClient expects a generic 'signer' object that can sign transactions
-      const signer = {
-        accountAddress: account.address,
-        signAndSubmitTransaction: signAndSubmitTransaction
-      };
+      // 1. Encode File for Shelby
+      setLoading(true);
+      const data = Buffer.from(await file.arrayBuffer());
+      const provider = await createDefaultErasureCodingProvider();
+      const commitments: BlobCommitments = await generateCommitments(provider, data);
 
-      const bufferData = Buffer.from(await file.arrayBuffer());
-      
-      await shelbyClient.upload({
-        blobData: bufferData,
-        signer: signer as any, // Cast to any to align with the generic wallet interface
+      // Convert the string address to the AccountAddress object expected by the SDK
+      const creatorAddress = AccountAddress.fromString(account.address.toString());
+
+      // 2. Register On-Chain
+      const payload = ShelbyBlobClient.createRegisterBlobPayload({
+        account: creatorAddress,
         blobName: file.name,
+        blobMerkleRoot: commitments.blob_merkle_root,
+        numChunksets: expectedTotalChunksets(commitments.raw_data_size),
         expirationMicros: (1000 * 60 * 60 * 24 * 30 + Date.now()) * 1000, // 30 days
+        blobSize: commitments.raw_data_size,
+        encoding: 1, // Required by the SDK
+      });
+
+      const transaction: InputTransactionData = { data: payload as any };
+      const transactionSubmitted = await signAndSubmitTransaction(transaction);
+      
+      await aptosClient.waitForTransaction({
+        transactionHash: transactionSubmitted.hash,
+      });
+
+      // 3. Upload File Data to Shelby RPC
+      await shelbyClient.rpc.putBlob({
+        account: creatorAddress,
+        blobName: file.name,
+        blobData: new Uint8Array(await file.arrayBuffer()),
       });
 
       // 4. Save Metadata to Vercel (so our DB knows the price and title)
