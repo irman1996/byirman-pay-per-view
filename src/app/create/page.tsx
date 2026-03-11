@@ -67,6 +67,7 @@ export default function CreatePage() {
 
       const shelbyClient = new ShelbyClient({
         network: activeNetwork === Network.DEVNET ? Network.TESTNET : activeNetwork,
+        apiKey: "AG-MR5SFEFY8BSVMEMVG9YETVQBZJJ2QYEPF",
         rpc: rpcUrl ? { baseUrl: rpcUrl } : undefined,
         indexer: indexerUrl ? { baseUrl: indexerUrl } : undefined
       });
@@ -97,6 +98,10 @@ export default function CreatePage() {
       await aptosClient.waitForTransaction({
         transactionHash: transactionSubmitted.hash,
       });
+
+      // Wait 3 seconds to ensure the Shelby Indexer (GraphQL) has synchronized the on-chain blob registration
+      // If the storage node checks the indexer before it has synced, it rejects the `complete` call with a 400 Bad Request
+      await new Promise(resolve => setTimeout(resolve, 3000));
 
       // 3. Upload File Data to Shelby RPC
       await shelbyClient.rpc.putBlob({
