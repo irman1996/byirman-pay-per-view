@@ -18,6 +18,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    const network = formData.get("network") as string || "testnet";
+
     const contentId = crypto.randomBytes(8).toString("hex");
 
     const metadata = {
@@ -27,7 +29,7 @@ export async function POST(req: Request) {
       currency,
       creatorAddress,
       shelbyBlobName, // The exact file name uploaded to Shelby
-      network: "testnet"
+      network
     };
 
     const metadataBuffer = Buffer.from(JSON.stringify(metadata, null, 2));

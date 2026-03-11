@@ -16,7 +16,7 @@ import Link from "next/link";
 import "./create.css";
 
 export default function CreatePage() {
-  const { connected, account, signAndSubmitTransaction } = useWallet();
+  const { connected, account, network, signAndSubmitTransaction } = useWallet();
   const [file, setFile] = useState<File | null>(null);
   const [price, setPrice] = useState("1");
   const [currency, setCurrency] = useState("APT");
@@ -33,11 +33,19 @@ export default function CreatePage() {
     setErrorMessage(null);
 
     try {
-      // Initialize Aptos and Shelby clients
-      const aptosClient = new Aptos(new AptosConfig({ network: Network.TESTNET }));
+      // Derive active network from wallet
+      const networkName = network?.name?.toLowerCase() || "";
+      let activeNetwork: any = Network.TESTNET;
+      if (networkName.includes("devnet")) activeNetwork = Network.DEVNET;
+      else if (networkName.includes("mainnet")) activeNetwork = Network.MAINNET;
+      else if (networkName.includes("local")) activeNetwork = Network.LOCAL;
+      else if (networkName.includes("shelby")) activeNetwork = "shelbynet";
+
+      // Initialize Aptos and Shelby clients with the wallet's actual network
+      const aptosClient = new Aptos(new AptosConfig({ network: activeNetwork }));
       
       const shelbyClient = new ShelbyClient({
-        network: Network.TESTNET,
+        network: activeNetwork === Network.DEVNET ? Network.TESTNET : activeNetwork, // Fallback if shelby SDK doesn't natively export devnet ENUM
       });
 
       // 1. Encode File for Shelby
@@ -84,6 +92,7 @@ export default function CreatePage() {
       formData.append("currency", currency);
       formData.append("creatorAddress", account.address.toString());
       formData.append("shelbyBlobName", file.name); // Track the exact filename uploaded to Shelby
+      formData.append("network", activeNetwork); // Save the exact network used
 
       const res = await fetch("/api/upload", {
         method: "POST",

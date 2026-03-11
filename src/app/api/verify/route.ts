@@ -6,8 +6,6 @@ import crypto from "crypto";
 
 export const runtime = 'nodejs'; // Ensure this runs in Node, not Edge
 
-const aptos = new Aptos(new AptosConfig({ network: Network.TESTNET }));
-
 export async function POST(req: Request) {
   try {
     const { contentId, transactionHash, viewerAddress } = await req.json();
@@ -24,7 +22,8 @@ export async function POST(req: Request) {
     const metaRes = await fetch(metaBlobs[0].url);
     const metadata = await metaRes.json();
 
-    // 2. Fetch transaction from blockchain
+    // 2. Fetch transaction from blockchain on correct network
+    const aptos = new Aptos(new AptosConfig({ network: metadata.network || Network.TESTNET }));
     const tx: any = await aptos.getTransactionByHash({ transactionHash });
     
     // 3. Verify transaction

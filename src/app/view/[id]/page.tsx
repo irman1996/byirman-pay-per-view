@@ -9,9 +9,6 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import "./view.css";
 
-const aptosConfig = new AptosConfig({ network: Network.TESTNET });
-const aptos = new Aptos(aptosConfig);
-
 export default function ViewPage() {
   const params = useParams();
   const id = params.id as string;
@@ -69,7 +66,10 @@ export default function ViewPage() {
       // 3. Sign and submit
       const response = await signAndSubmitTransaction(transaction);
       
-      // 4. Wait for transaction
+      // 4. Wait for transaction dynamically on the correct network
+      const aptos = new Aptos(new AptosConfig({ 
+        network: metadata.network as Network || Network.TESTNET 
+      }));
       const executedTransaction = await aptos.waitForTransaction({ transactionHash: response.hash });
       
       if (!executedTransaction.success) {
