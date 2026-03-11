@@ -54,17 +54,20 @@ export default function CreatePage() {
       }));
       
       let indexerUrl: string | undefined;
+      let rpcUrl: string | undefined;
 
       if (activeNetwork === Network.CUSTOM && fullnodeUrl?.includes("shelby")) {
          // This is Shelby's Devnet (SHELBYNET)
          indexerUrl = "https://api.shelbynet.aptoslabs.com/nocode/v1/public/cmforrguw0042s601fn71f9l2/v1/graphql";
+         rpcUrl = "https://api.shelbynet.shelby.xyz/shelby";
       } else if (activeNetwork === Network.TESTNET || activeNetwork === Network.DEVNET) {
          indexerUrl = "https://api.testnet.aptoslabs.com/nocode/v1/public/cmlfqs5wt00qrs601zt5s4kfj/v1/graphql";
+         rpcUrl = "https://api.testnet.shelby.xyz/shelby";
       }
 
       const shelbyClient = new ShelbyClient({
         network: activeNetwork === Network.DEVNET ? Network.TESTNET : activeNetwork,
-        rpc: fullnodeUrl ? { baseUrl: fullnodeUrl } : undefined,
+        rpc: rpcUrl ? { baseUrl: rpcUrl } : undefined,
         indexer: indexerUrl ? { baseUrl: indexerUrl } : undefined
       });
 
