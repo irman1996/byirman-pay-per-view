@@ -144,3 +144,23 @@
   display: flex;
   gap: 0.5rem;
 }
+
+.error-alert {
+  padding: 1rem;
+  background: rgba(255, 99, 132, 0.1);
+  border: 1px solid rgba(255, 99, 132, 0.3);
+  border-radius: var(--radius-sm);
+  color: #ff6384;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.text-link {
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.text-link:hover {
+  opacity: 0.8;
+}

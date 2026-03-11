@@ -22,12 +22,14 @@ export default function CreatePage() {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [generatedLink, setGeneratedLink] = useState("");
+  const [errorMessage, setErrorMessage] = useState<React.ReactNode | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file || !title || !price || !account) return;
     setLoading(true);
+    setErrorMessage(null);
 
     try {
       // Initialize Aptos and Shelby clients
@@ -91,9 +93,31 @@ export default function CreatePage() {
       
       const shareableLink = `${window.location.origin}/view/${metadataRes.contentId}`;
       setGeneratedLink(shareableLink);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Error: " + (error as Error).message);
+      const msg = error?.message || String(error);
+      
+      if (msg.includes("INSUFFICIENT_BALANCE_FOR_TRANSACTION_FEE")) {
+        setErrorMessage(
+          <span>
+            You don't have enough APT to pay for the gas fee. Please visit the{" "}
+            <a href={`https://aptos.dev/network/faucet?address=${account.address}`} target="_blank" rel="noreferrer" className="text-link">Aptos Faucet</a>
+            {" "}to fund your wallet.
+          </span>
+        );
+      } else if (msg.includes("E_INSUFFICIENT_FUNDS")) {
+        setErrorMessage(
+          <span>
+            You don't have enough ShelbyUSD to pay for storage. Please visit the{" "}
+            <a href={`https://devnet.shelby.xyz/tap?address=${account.address}`} target="_blank" rel="noreferrer" className="text-link">Shelby Faucet</a>
+            {" "}to fund your wallet.
+          </span>
+        );
+      } else if (msg.includes("EBLOB_WRITE_CHUNKSET_ALREADY_EXISTS")) {
+         setErrorMessage("This exact file has already been uploaded to Shelby. Try renaming it.");
+      } else {
+        setErrorMessage("Upload failed: " + msg);
+      }
     } finally {
       setLoading(false);
     }
@@ -139,6 +163,12 @@ export default function CreatePage() {
           </div>
         ) : (
           <form className="upload-form glass-panel" onSubmit={handleUpload}>
+            {errorMessage && (
+              <div className="error-alert">
+                {errorMessage}
+              </div>
+            )}
+            
             <div className="form-group">
               <label>Content Title</label>
               <input 
