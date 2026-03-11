@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { SHELBYUSD_FA_METADATA_ADDRESS } from "@shelby-protocol/sdk/node";
 import { put, list } from "@vercel/blob";
 import crypto from "crypto";
 
@@ -32,17 +33,34 @@ export async function POST(req: Request) {
     }
 
     const payload = tx.payload;
-    if (
-      payload.type !== "entry_function_payload" ||
-      payload.function !== "0x1::aptos_account::transfer"
-    ) {
+    if (payload.type !== "entry_function_payload") {
       return NextResponse.json({ error: "Invalid transaction type" }, { status: 400 });
     }
 
-    const [recipientArg, amountArg] = payload.arguments;
-    const recipientAddress = typeof recipientArg === "string" ? recipientArg : recipientArg.toString();
-    const amountInOctas = typeof amountArg === "string" ? amountArg : amountArg.toString();
     const expectedAmount = Math.floor(parseFloat(metadata.price) * 100000000).toString();
+    const isShelbyUSD = metadata.currency === "SHELBYUSD";
+    
+    let recipientAddress: string;
+    let amountInOctas: string;
+
+    if (isShelbyUSD) {
+      if (payload.function !== "0x1::primary_fungible_store::transfer") {
+        return NextResponse.json({ error: "Invalid FA transaction function" }, { status: 400 });
+      }
+      const [metadataAddressArg, recipientArg, amountArg] = payload.arguments;
+      if (metadataAddressArg.toLowerCase() !== SHELBYUSD_FA_METADATA_ADDRESS.toLowerCase()) {
+         return NextResponse.json({ error: "Invalid FA token transferred" }, { status: 400 });
+      }
+      recipientAddress = typeof recipientArg === "string" ? recipientArg : recipientArg.toString();
+      amountInOctas = typeof amountArg === "string" ? amountArg : amountArg.toString();
+    } else {
+      if (payload.function !== "0x1::aptos_account::transfer") {
+        return NextResponse.json({ error: "Invalid APT transaction function" }, { status: 400 });
+      }
+      const [recipientArg, amountArg] = payload.arguments;
+      recipientAddress = typeof recipientArg === "string" ? recipientArg : recipientArg.toString();
+      amountInOctas = typeof amountArg === "string" ? amountArg : amountArg.toString();
+    }
 
     if (recipientAddress.toLowerCase() !== metadata.creatorAddress.toLowerCase()) {
       return NextResponse.json({ error: "Invalid recipient" }, { status: 400 });

@@ -19,6 +19,7 @@ export default function CreatePage() {
   const { connected, account, signAndSubmitTransaction } = useWallet();
   const [file, setFile] = useState<File | null>(null);
   const [price, setPrice] = useState("1");
+  const [currency, setCurrency] = useState("APT");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [generatedLink, setGeneratedLink] = useState("");
@@ -80,6 +81,7 @@ export default function CreatePage() {
       formData.append("file", new Blob(["mock"], { type: "text/plain" }), `mock-${file.name}`); // We don't upload the real file to Vercel anymore!
       formData.append("title", title);
       formData.append("price", price);
+      formData.append("currency", currency);
       formData.append("creatorAddress", account.address.toString());
       formData.append("shelbyBlobName", file.name); // Track the exact filename uploaded to Shelby
 
@@ -203,17 +205,27 @@ export default function CreatePage() {
             </div>
 
             <div className="form-group">
-              <label>Price (APT)</label>
-              <input 
-                type="number" 
-                className="input" 
-                min="0.01" 
-                step="0.01" 
-                placeholder="e.g. 1.0" 
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                required
-              />
+              <label>Price</label>
+              <div className="price-input-group">
+                <input 
+                  type="number" 
+                  className="input price-input" 
+                  min="0.01" 
+                  step="0.01" 
+                  placeholder="1.0" 
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                />
+                <select 
+                  className="input currency-select"
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                >
+                  <option value="APT">APT</option>
+                  <option value="SHELBYUSD">ShelbyUSD</option>
+                </select>
+              </div>
             </div>
 
             <button type="submit" className="btn btn-primary w-full" disabled={loading || !file || !title}>

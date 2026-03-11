@@ -10,6 +10,7 @@ export async function POST(req: Request) {
     // The "file" is now just a dummy mock file sent from frontend because real file is in Shelby
     const title = formData.get("title") as string;
     const price = formData.get("price") as string;
+    const currency = formData.get("currency") as string || "APT";
     const creatorAddress = formData.get("creatorAddress") as string;
     const shelbyBlobName = formData.get("shelbyBlobName") as string;
 
@@ -19,11 +20,11 @@ export async function POST(req: Request) {
 
     const contentId = crypto.randomBytes(8).toString("hex");
 
-    // Upload metadata to Vercel Blob (as a JSON file)
     const metadata = {
       contentId,
       title,
       price,
+      currency,
       creatorAddress,
       shelbyBlobName, // The exact file name uploaded to Shelby
       network: "testnet"

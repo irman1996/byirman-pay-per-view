@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { SHELBYUSD_FA_METADATA_ADDRESS } from "@shelby-protocol/sdk/browser";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import "./view.css";
@@ -43,14 +44,27 @@ export default function ViewPage() {
       // 1. Convert APT to Octas (1 APT = 10^8 Octas)
       const amountInOctas = Math.floor(parseFloat(metadata.price) * 100000000);
 
-      // 2. Create the transfer transaction payload
-      const transaction: any = {
-        data: {
-          function: "0x1::aptos_account::transfer",
-          typeArguments: [],
-          functionArguments: [metadata.creatorAddress, amountInOctas],
-        },
-      };
+      let transaction: any;
+
+      if (metadata.currency === "SHELBYUSD") {
+        // Transfer ShelbyUSD Fungible Asset
+        transaction = {
+          data: {
+            function: "0x1::primary_fungible_store::transfer",
+            typeArguments: ["0x1::fungible_asset::Metadata"],
+            functionArguments: [SHELBYUSD_FA_METADATA_ADDRESS, metadata.creatorAddress, amountInOctas.toString()],
+          },
+        };
+      } else {
+        // Transfer Native APT Coin
+        transaction = {
+          data: {
+            function: "0x1::aptos_account::transfer",
+            typeArguments: [],
+            functionArguments: [metadata.creatorAddress, amountInOctas],
+          },
+        };
+      }
 
       // 3. Sign and submit
       const response = await signAndSubmitTransaction(transaction);
@@ -136,7 +150,7 @@ export default function ViewPage() {
           <div className="locked-state">
             <div className="price-tag">
               <span className="price-label">Price to Unlock</span>
-              <span className="price-value">{metadata.price} APT</span>
+              <span className="price-value">{metadata.price} {metadata.currency || "APT"}</span>
             </div>
             
             {!connected ? (
@@ -149,7 +163,7 @@ export default function ViewPage() {
                 onClick={handleUnlock}
                 disabled={unlocking}
               >
-                {unlocking ? "Processing Payment & Unlocking..." : `Pay ${metadata.price} APT to Unlock`}
+                {unlocking ? "Processing Payment & Unlocking..." : `Pay ${metadata.price} ${metadata.currency || "APT"} to Unlock`}
               </button>
             )}
             <p className="security-note">Payment is sent directly to the creator's wallet ({metadata.creatorAddress.slice(0,6)}...{metadata.creatorAddress.slice(-4)}).</p>

@@ -1,0 +1,918 @@
+﻿
+> pay-per-view@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (:String) [],    
+ RemoteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+> Build error occurred
+Error: Turbopack build 
+failed with 7 errors:
+./node_modules/@aptos-l
+abs/wallet-adapter-core
+/dist/index.mjs:5:1
+Module not found: 
+Can't resolve 'aptos'
+[0m [90m 3 |[39m
+ [90m 4 |[39m 
+[90m// 
+src/WalletCore.ts[39m
+[31m[1m>[22m[39m[9
+0m 5 |[39m 
+[36mimport[39m { [33
+mTxnBuilderTypes[39m 
+[36mas[39m [33mTxnBu
+ilderTypes4[39m[33m,
+[39m [33mBCS[39m 
+[36mas[39m 
+[33mBCS2[39m } 
+[36mfrom[39m [32m"ap
+tos"[39m[33m;[39m
+ [90m   |[39m [31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m
+ [90m 6 |[39m 
+[36mimport[39m {
+ [90m 7 |[39m   
+[33mNetwork[39m 
+[36mas[39m [33mNetwo
+rk3[39m[33m,[39m
+ [90m 8 |[39m   [33m
+AccountAuthenticatorEd2
+5519[39m[33m,[39m[0
+m
+
+
+
+Import traces:
+  Client Component 
+Browser:
+    ./node_modules/@apt
+os-labs/wallet-adapter-
+core/dist/index.mjs 
+[Client Component 
+Browser]
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+  Client Component SSR:
+    ./node_modules/@apt
+os-labs/wallet-adapter-
+core/dist/index.mjs 
+[Client Component SSR]
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+
+./node_modules/@aptos-l
+abs/wallet-adapter-core
+/dist/index.mjs:148:1
+Module not found: 
+Can't resolve 'aptos'
+[0m [90m 146 |[39m
+ [90m 147 |[39m 
+[90m// src/LegacyWalle
+tPlugins/WalletCoreV1.t
+s[39m
+[31m[1m>[22m[39m[9
+0m 148 |[39m 
+[36mimport[39m { 
+[33mHexString[39m } 
+[36mfrom[39m [32m"ap
+tos"[39m[33m;[39m
+ [90m     |[39m [31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m
+ [90m 149 |[39m 
+[36mimport[39m 
+[33mEventEmitter[39m 
+[36mfrom[39m [32m"ev
+entemitter3"[39m[33m;
+[39m
+ [90m 150 |[39m 
+[36mimport[39m { 
+[33mBuffer[39m } 
+[36mfrom[39m [32m"bu
+ffer"[39m[33m;[39m
+ [90m 151 |[39m 
+[36mimport[39m {[0m
+
+
+
+Import traces:
+  Client Component 
+Browser:
+    ./node_modules/@apt
+os-labs/wallet-adapter-
+core/dist/index.mjs 
+[Client Component 
+Browser]
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+  Client Component SSR:
+    ./node_modules/@apt
+os-labs/wallet-adapter-
+core/dist/index.mjs 
+[Client Component SSR]
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+
+./node_modules/@aptos-l
+abs/wallet-adapter-core
+/dist/index.mjs:162:1
+Module not found: 
+Can't resolve 'aptos'
+[0m [90m 160 |[39m  
+ generateTransactionPay
+load
+ [90m 161 |[39m } 
+[36mfrom[39m [32m"@a
+ptos-labs/ts-sdk"[39m
+[33m;[39m
+[31m[1m>[22m[39m[9
+0m 162 |[39m 
+[36mimport[39m { [33
+mBCS[39m[33m,[39m [
+33mTxnBuilderTypes[39m
+ } [36mfrom[39m [32m
+"aptos"[39m[33m;[39m
+ [90m     |[39m [31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m
+ [90m 163 |[39m 
+[36mfunction[39m conv
+ertNetwork(networkInfo)
+ {
+ [90m 164 |[39m   
+[36mswitch[39m 
+(networkInfo 
+[33m==[39m 
+[36mnull[39m 
+[33m?[39m 
+[36mvoid[39m 
+[35m0[39m 
+[33m:[39m networkInfo
+[33m.[39mname) {
+ [90m 165 |[39m     
+[36mcase[39m [32m"ma
+innet"[39m[33m:[39m
+[0m
+
+
+
+Import traces:
+  Client Component 
+Browser:
+    ./node_modules/@apt
+os-labs/wallet-adapter-
+core/dist/index.mjs 
+[Client Component 
+Browser]
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+  Client Component SSR:
+    ./node_modules/@apt
+os-labs/wallet-adapter-
+core/dist/index.mjs 
+[Client Component SSR]
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+
+./node_modules/@aptos-l
+abs/wallet-adapter-core
+/dist/index.mjs:465:1
+Module not found: 
+Can't resolve 'aptos'
+[0m [90m 463 |[39m
+ [90m 464 |[39m 
+[90m// src/LegacyWalle
+tPlugins/types.ts[39m
+[31m[1m>[22m[39m[9
+0m 465 |[39m 
+[36mimport[39m { [33
+mTxnBuilderTypes[39m 
+[36mas[39m [33mTxnBu
+ilderTypes3[39m[33m,
+[39m [33mTypes[39m 
+[36mas[39m 
+[33mTypes3[39m } 
+[36mfrom[39m [32m"ap
+tos"[39m[33m;[39m
+ [90m     |[39m [31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m
+ [90m 466 |[39m
+ [90m 467 |[39m 
+[90m// src/AIP62Standa
+rdWallets/WalletStandar
+d.ts[39m
+ [90m 468 |[39m 
+[36mimport[39m {[0m
+
+
+
+Import traces:
+  Client Component 
+Browser:
+    ./node_modules/@apt
+os-labs/wallet-adapter-
+core/dist/index.mjs 
+[Client Component 
+Browser]
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+  Client Component SSR:
+    ./node_modules/@apt
+os-labs/wallet-adapter-
+core/dist/index.mjs 
+[Client Component SSR]
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+
+./node_modules/petra-pl
+ugin-wallet-adapter/dis
+t/index.mjs:6:1
+Module not found: 
+Can't resolve 'aptos'
+[0m [90m 4 |[39m   
+areBCSArguments
+ [90m 5 |[39m } 
+[36mfrom[39m [32m"@a
+ptos-labs/wallet-adapte
+r-core"[39m[33m;[39m
+[31m[1m>[22m[39m[9
+0m 6 |[39m 
+[36mimport[39m { [33
+mTxnBuilderTypes[39m 
+[36mas[39m [33mTxnBu
+ilderTypes2[39m } 
+[36mfrom[39m [32m"ap
+tos"[39m[33m;[39m
+ [90m   |[39m [31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m
+ [90m 7 |[39m
+ [90m 8 |[39m 
+[90m// 
+src/conversion.ts[39m
+ [90m 9 |[39m 
+[36mimport[39m {[0m
+
+
+
+Import traces:
+  Client Component 
+Browser:
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+  Client Component SSR:
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+
+./node_modules/petra-pl
+ugin-wallet-adapter/dis
+t/index.mjs:16:1
+Module not found: 
+Can't resolve 'aptos'
+[0m [90m 14 |[39m   
+generateTransactionPayl
+oad
+ [90m 15 |[39m } 
+[36mfrom[39m [32m"@a
+ptos-labs/ts-sdk"[39m
+[33m;[39m
+[31m[1m>[22m[39m[9
+0m 16 |[39m 
+[36mimport[39m { [33
+mBCS[39m[33m,[39m [
+33mTxnBuilderTypes[39m
+ } [36mfrom[39m [32m
+"aptos"[39m[33m;[39m
+ [90m    |[39m [31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m
+ [90m 17 |[39m 
+[36mfunction[39m conv
+ertV1toV2(src[33m,[39
+m dst) {
+ [90m 18 |[39m   
+[36mconst[39m 
+serializedBytes 
+[33m=[39m [33mBCS[3
+9m[33m.[39mbcsToBytes
+(src)[33m;[39m
+ [90m 19 |[39m   
+[36mconst[39m 
+deserializerV2 
+[33m=[39m 
+[36mnew[39m [33mDese
+rializer[39m(serialize
+dBytes)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component 
+Browser:
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component 
+Browser]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+  Client Component SSR:
+    ./node_modules/petr
+a-plugin-wallet-adapter
+/dist/index.mjs 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Client Component SSR]
+    ./src/components/Wa
+lletProvider.tsx 
+[Server Component]
+    
+./src/app/layout.tsx 
+[Server Component]
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+
+./node_modules/@aptos-l
+abs/aptos-client/dist/n
+ode/index.node.mjs:2:1
+Module not found: 
+Can't resolve 'got'
+[0m [90m 1 |[39m 
+[90m// 
+src/index.node.ts[39m
+[31m[1m>[22m[39m[9
+0m 2 |[39m 
+[36mimport[39m got 
+[36mfrom[39m [32m"go
+t"[39m[33m;[39m
+ [90m   |[39m [31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m
+ [90m 3 |[39m
+ [90m 4 |[39m 
+[90m// 
+src/cookieJar.ts[39m
+ [90m 5 |[39m 
+[36mvar[39m 
+[33mCookieJar[39m 
+[33m=[39m 
+[36mclass[39m 
+_CookieJar {[0m
+
+
+
+Import traces:
+  App Route:
+    ./node_modules/@apt
+os-labs/aptos-client/di
+st/node/index.node.mjs
+    ./node_modules/@apt
+os-labs/ts-sdk/dist/esm
+/chunk-F2ZTBAJJ.mjs
+    ./src/app/api/verif
+y/route.ts
+
+  Client Component SSR:
+    ./node_modules/@apt
+os-labs/aptos-client/di
+st/node/index.node.mjs 
+[Client Component SSR]
+    ./node_modules/@apt
+os-labs/ts-sdk/dist/esm
+/chunk-F2ZTBAJJ.mjs 
+[Client Component SSR]
+    ./src/app/create/pa
+ge.tsx [Client 
+Component SSR]
+    ./src/app/create/pa
+ge.tsx [Server 
+Component]
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+
+    at ./node_modules/ 
+(aptos-labs/wallet-adap
+ter-core/dist/index.mjs
+:5:1)
+    at <unknown> (https
+://nextjs.org/docs/mess
+ages/module-not-found)
+    at ./node_modules/ 
+(aptos-labs/wallet-adap
+ter-core/dist/index.mjs
+:148:1)
+    at <unknown> (https
+://nextjs.org/docs/mess
+ages/module-not-found)
+    at ./node_modules/ 
+(aptos-labs/wallet-adap
+ter-core/dist/index.mjs
+:162:1)
+    at <unknown> (https
+://nextjs.org/docs/mess
+ages/module-not-found)
+    at ./node_modules/ 
+(aptos-labs/wallet-adap
+ter-core/dist/index.mjs
+:465:1)
+    at <unknown> (https
+://nextjs.org/docs/mess
+ages/module-not-found)
+    at <unknown> (https
+://nextjs.org/docs/mess
+ages/module-not-found)
+    at <unknown> (https
+://nextjs.org/docs/mess
+ages/module-not-found)
+    at ./node_modules/ 
+(aptos-labs/aptos-clien
+t/dist/node/index.node.
+mjs:2:1)
+    at <unknown> (https
+://nextjs.org/docs/mess
+ages/module-not-found)
+
