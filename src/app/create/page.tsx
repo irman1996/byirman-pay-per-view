@@ -4,11 +4,6 @@ import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 import { useWallet, InputTransactionData } from "@aptos-labs/wallet-adapter-react";
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 import { 
-  type BlobCommitments, 
-  createDefaultErasureCodingProvider, 
-  generateCommitments,
-  expectedTotalChunksets,
-  ShelbyBlobClient,
   ShelbyClient
 } from "@shelby-protocol/sdk/browser";
 import { useState, useRef } from "react";
@@ -30,43 +25,25 @@ export default function CreatePage() {
     setLoading(true);
 
     try {
-      // Initialize Aptos and Shelby clients
-      const aptosClient = new Aptos(new AptosConfig({ network: Network.TESTNET }));
-      
-      // Need an API key in a real app, assuming empty for testnet per docs if not provided
+      // Initialize Shelby client for browser
       const shelbyClient = new ShelbyClient({
         network: Network.TESTNET,
       });
 
-      // 1. Encode File for Shelby
-      setLoading(true);
-      const data = Buffer.from(await file.arrayBuffer());
-      const provider = await createDefaultErasureCodingProvider();
-      const commitments: BlobCommitments = await generateCommitments(provider, data);
+      // 1. Upload File directly via Shelby SDK (Handles encoding + registration + RPC upload)
+      // The ShelbyClient expects a generic 'signer' object that can sign transactions
+      const signer = {
+        accountAddress: account.address,
+        signAndSubmitTransaction: signAndSubmitTransaction
+      };
 
-      // 2. Register On-Chain
-      const payload = ShelbyBlobClient.createRegisterBlobPayload({
-        account: account.address,
-        blobName: file.name,
-        blobMerkleRoot: commitments.blob_merkle_root,
-        numChunksets: expectedTotalChunksets(commitments.raw_data_size),
-        expirationMicros: (1000 * 60 * 60 * 24 * 30 + Date.now()) * 1000, // 30 days
-        blobSize: commitments.raw_data_size,
-        encoding: 1, // Required by the SDK
-      });
-
-      const transaction: InputTransactionData = { data: payload };
-      const transactionSubmitted = await signAndSubmitTransaction(transaction);
+      const bufferData = Buffer.from(await file.arrayBuffer());
       
-      await aptosClient.waitForTransaction({
-        transactionHash: transactionSubmitted.hash,
-      });
-
-      // 3. Upload File Data to Shelby RPC
-      await shelbyClient.rpc.putBlob({
-        account: account.address,
+      await shelbyClient.upload({
+        blobData: bufferData,
+        signer: signer as any, // Cast to any to align with the generic wallet interface
         blobName: file.name,
-        blobData: new Uint8Array(await file.arrayBuffer()),
+        expirationMicros: (1000 * 60 * 60 * 24 * 30 + Date.now()) * 1000, // 30 days
       });
 
       // 4. Save Metadata to Vercel (so our DB knows the price and title)
