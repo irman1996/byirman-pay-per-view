@@ -53,8 +53,15 @@ export default function CreatePage() {
         fullnode: fullnodeUrl
       }));
       
+      let shelbyNetwork: any = activeNetwork;
+      if (activeNetwork === Network.CUSTOM && fullnodeUrl?.includes("shelby")) {
+         shelbyNetwork = "shelbynet"; // Native enumeration in @shelby-protocol/sdk
+      } else if (activeNetwork === Network.DEVNET) {
+         shelbyNetwork = Network.TESTNET; // Fallback for standard Devnet
+      }
+
       const shelbyClient = new ShelbyClient({
-        network: activeNetwork === Network.DEVNET ? Network.TESTNET : activeNetwork, // Fallback if shelby SDK doesn't natively export devnet ENUM
+        network: shelbyNetwork,
         rpc: fullnodeUrl ? { baseUrl: fullnodeUrl } : undefined
       });
 
