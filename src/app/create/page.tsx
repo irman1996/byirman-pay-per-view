@@ -58,7 +58,6 @@ export default function CreatePage() {
         expirationMicros: (1000 * 60 * 60 * 24 * 30 + Date.now()) * 1000, // 30 days
         blobSize: commitments.raw_data_size,
         encoding: 1, // Required by the SDK
-        useSponsoredUsdVariant: true, // Use devnet sponsorship so users don't need their own ShelbyUSD
       });
 
       const transaction: InputTransactionData = { data: payload as any };
