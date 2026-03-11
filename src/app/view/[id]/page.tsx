@@ -68,7 +68,8 @@ export default function ViewPage() {
       
       // 4. Wait for transaction dynamically on the correct network
       const aptos = new Aptos(new AptosConfig({ 
-        network: metadata.network as Network || Network.TESTNET 
+        network: metadata.network as Network || Network.TESTNET,
+        fullnode: metadata.fullnodeUrl
       }));
       const executedTransaction = await aptos.waitForTransaction({ transactionHash: response.hash });
       

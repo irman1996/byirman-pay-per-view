@@ -36,16 +36,26 @@ export default function CreatePage() {
       // Derive active network from wallet
       const networkName = network?.name?.toLowerCase() || "";
       let activeNetwork: any = Network.TESTNET;
-      if (networkName.includes("devnet")) activeNetwork = Network.DEVNET;
-      else if (networkName.includes("mainnet")) activeNetwork = Network.MAINNET;
-      else if (networkName.includes("local")) activeNetwork = Network.LOCAL;
-      else if (networkName.includes("shelby")) activeNetwork = "shelbynet";
+      let fullnodeUrl: string | undefined = network?.url;
+
+      if (fullnodeUrl && !fullnodeUrl.includes("aptoslabs.com")) {
+        activeNetwork = Network.CUSTOM;
+      } else {
+        if (networkName.includes("devnet")) activeNetwork = Network.DEVNET;
+        else if (networkName.includes("mainnet")) activeNetwork = Network.MAINNET;
+        else if (networkName.includes("local")) activeNetwork = Network.LOCAL;
+        else activeNetwork = Network.TESTNET;
+      }
 
       // Initialize Aptos and Shelby clients with the wallet's actual network
-      const aptosClient = new Aptos(new AptosConfig({ network: activeNetwork }));
+      const aptosClient = new Aptos(new AptosConfig({ 
+        network: activeNetwork,
+        fullnode: fullnodeUrl
+      }));
       
       const shelbyClient = new ShelbyClient({
         network: activeNetwork === Network.DEVNET ? Network.TESTNET : activeNetwork, // Fallback if shelby SDK doesn't natively export devnet ENUM
+        rpc: fullnodeUrl ? { baseUrl: fullnodeUrl } : undefined
       });
 
       // 1. Encode File for Shelby
@@ -92,7 +102,8 @@ export default function CreatePage() {
       formData.append("currency", currency);
       formData.append("creatorAddress", account.address.toString());
       formData.append("shelbyBlobName", file.name); // Track the exact filename uploaded to Shelby
-      formData.append("network", activeNetwork); // Save the exact network used
+      formData.append("network", activeNetwork.toString()); // Save the exact network used
+      if (fullnodeUrl) formData.append("fullnodeUrl", fullnodeUrl);
 
       const res = await fetch("/api/upload", {
         method: "POST",

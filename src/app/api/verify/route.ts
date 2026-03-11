@@ -23,7 +23,10 @@ export async function POST(req: Request) {
     const metadata = await metaRes.json();
 
     // 2. Fetch transaction from blockchain on correct network
-    const aptos = new Aptos(new AptosConfig({ network: metadata.network || Network.TESTNET }));
+    const aptos = new Aptos(new AptosConfig({ 
+        network: metadata.network || Network.TESTNET,
+        fullnode: metadata.fullnodeUrl
+    }));
     const tx: any = await aptos.getTransactionByHash({ transactionHash });
     
     // 3. Verify transaction

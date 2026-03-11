@@ -19,6 +19,7 @@ export async function POST(req: Request) {
     }
 
     const network = formData.get("network") as string || "testnet";
+    const fullnodeUrl = formData.get("fullnodeUrl") as string | undefined;
 
     const contentId = crypto.randomBytes(8).toString("hex");
 
@@ -29,7 +30,8 @@ export async function POST(req: Request) {
       currency,
       creatorAddress,
       shelbyBlobName, // The exact file name uploaded to Shelby
-      network
+      network,
+      fullnodeUrl
     };
 
     const metadataBuffer = Buffer.from(JSON.stringify(metadata, null, 2));
